@@ -1,0 +1,32 @@
+# Release workflow for the ASP.NET Core integration (NuGet `Lockally.AspNetCore`).
+#
+# TEMPLATE — inert in this monorepo. Copied to `.github/workflows/publish.yml` in
+# the framework repo (github.com/lockallyinc/lockally-aspnetcore) by
+# publish-sdk-repos.sh. Tag-driven: push `vX.Y.Z`.
+#
+# One-time setup:
+#   - Add repo secret NUGET_API_KEY = a NuGet API key scoped to push
+#     `Lockally.AspNetCore` (nuget.org → API Keys). Claude never handles this token.
+name: Publish NuGet
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+      - run: dotnet build src/Lockally.AspNetCore/Lockally.AspNetCore.csproj -c Release
+      - run: dotnet pack src/Lockally.AspNetCore/Lockally.AspNetCore.csproj -c Release -o dist
+      - name: Push to NuGet
+        run: dotnet nuget push "dist/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

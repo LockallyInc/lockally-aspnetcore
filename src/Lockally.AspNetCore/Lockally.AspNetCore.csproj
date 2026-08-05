@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <PackageId>Lockally.AspNetCore</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Lockally</Authors>
+    <Company>Lockally</Company>
+    <Description>Official Lockally integration for ASP.NET Core — register Lockally in DI and send transactional email (including ASP.NET Core Identity emails) via Lockally.</Description>
+    <PackageProjectUrl>https://lockally.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lockallyinc/lockally-aspnetcore</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>lockally;aspnetcore;email;mail;transactional;identity</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Lockally.SDK" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
